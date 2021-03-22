@@ -46,10 +46,13 @@
     <!--    （如果SpringMVC找不到资源，则交给原始的容器tomcat）-->
     <mvc:default-servlet-handler/>
 
-    <!--配置文件上传解析器-->
+    <!--配置SpringMVC对文件上传的支持-->
+    <!-- MultipartResolver（多部件解析器）是个接口对象，需要通过它的实现类CommonsMultipartResolver来完成文件上传-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置请求编码格式，必须与jsp一样，同为utf-8-->
         <property name="defaultEncoding" value="UTF-8"/>
-        <property name="maxInMemorySize" value="500000"/>
+        <!-- 设置允许上传文件的最大值(5MB)，单位为字节  5MB=1024*1024*5 B -->
+        <property name="maxUploadSize" value="5242880"/>
     </bean>
 
     <!--配置拦截器-->

@@ -21,12 +21,12 @@ public class MyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         System.out.println("preHandler...");
-        // 若是返回false，则不会继续向下执行
+        // 若是返回false，则不会继续向下执行Interceptor和Controller
         return true;
     }
 
     /**
-     *      在目标方法执行之后，视图返回之前执行
+     *      在目标方法执行之后，视图返回之前执行（所以可以在这个方法中对Controller处理之后的ModelAndView对象进行操作）
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

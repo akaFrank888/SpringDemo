@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--命名空间namespace的作用是：绑定mapper接口，即面向接口编程-->
+<mapper namespace="mapper.UserMapper">
+
+    <!--  注意几点：
+                1）resultType和resultMap处的值可以在sqlMapConfig.xml中定义别名
+                2）当使用#{}参数语法时，Mybatis会自动创建PreparedStatement来预处理，并通过占位符的方法来设置参数，所以可以防注入漏洞。
+                  （但#{}会以字符串的形式将其中的内容进行替换！）
+                    相当于：
+                            String sql = "select * from all_user where user_id=?";
+                            PreparedStatement pstm = conn.preparedStatement(sql);
+                            pstm.setString(1,"2");
+                   （再结合parameterType参数，转成Integer）
+                 3）此处的id被当作参数，所以可以被任意定义。但若parameterType是一个User对象，则#{}里面要写User的属性名。
+                 4）利用resultMap来解决“表字段名和属性名不匹配的问题”
+    -->
+    <resultMap id="userResultMap" type="user">
+        <!--用id标签映射主键字段-->
+        <id property="id" column="user_id"/>
+        <!--用result标签映射非主键字段-->
+        <result property="username" column="user_name"/>
+        <result property="age" column="user_age"/>
+    </resultMap>
+
+    <!--查-->
+    <select id="findById" parameterType="Integer" resultMap="userResultMap">
+        select * from all_user where user_id=#{id};
+    </select>
+
+    <!--增-->
+    <insert id="save" parameterType="user">
+        insert into all_user values(#{id},#{username},#{age});
+    </insert>
+
+    <!--删-->
+    <delete id="delete" parameterType="Integer">
+        delete from all_user where user_id=#{id};
+    </delete>
+
+    <!--改-->
+    <update id="update" parameterType="user">
+        update all_user set user_name=#{username},user_age=#{age} where user_id=#{id};
+    </update>
+
+<!-- ====================================================== -->
+
+    <!--sql语句的抽取-->
+    <sql id="selectUser">select * from all_user</sql>
+
+
+    <!--
+        注意：
+            1）因为属性id和age是Integer，所以要判断是否为null
+            2）“ user_id=#{id} ” 其中，user_id是表字段名，id是参数user的属性名（mybatis会自动进行bind）
+    -->
+    <!--动态sql 之 if-->
+    <select id="findByUser" parameterType="user" resultMap="userResultMap">
+
+        /*相当于   select * from all_user    */
+        <include refid="selectUser"/>
+        <where>
+            <if test="id!=null">
+                and user_id = #{id}
+            </if>
+            <if test="username!=null">
+                and user_name = #{username}
+            </if>
+            <if test="age!=null">
+                and user_age = #{age}
+            </if>
+        </where>
+
+    </select>
+
+    <!--
+         注意：
+            1）foreach常用于 对集合的遍历（尤其在构建IN语句时）
+            2）parameter和collection的值可为list、map、set和array。当为可迭代对象或数组时，index是索引item是集合项；若是map时，index是键，item是值。
+            3）open：前缀    close：后缀    separator：分隔符
+            4）“  #{id} ” 中的id要与item的值保持统一
+    -->
+    <!--动态sql 之 foreach-->
+    <select id="findByIds"  parameterType="list" resultMap="userResultMap">
+        <include refid="selectUser"/>
+        <where>
+            <foreach collection="list" item="id" open="user_id in (" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+
+
+
+
+</mapper>

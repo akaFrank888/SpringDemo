@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 /**
  * @author yxl15
  * @Auther: yxl15
@@ -23,5 +25,6 @@ public class InterceptorController {
         modelAndView.addObject("name", "yxl");
         modelAndView.setViewName("success");
         return modelAndView;
+
     }
 }

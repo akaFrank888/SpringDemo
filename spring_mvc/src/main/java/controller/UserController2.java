@@ -116,24 +116,4 @@ public class UserController2 {
         System.out.println(jsessionid);
     }
 
-
-    /**
-     * 获得请求参数————单文件与多文件上传
-     */
-    @RequestMapping("/quick8")
-    @ResponseBody
-    public void upload(String username, MultipartFile uploadFile, MultipartFile uploadFile2) throws IOException {
-        System.out.println(username);
-
-        // 获得上传的文件的名称
-        String originalFilename = uploadFile.getOriginalFilename();
-        // 将文件移动到目标路径
-        uploadFile.transferTo(new File("D:\\Java\\project\\SpringDemo\\spring_mvc\\src\\main\\java\\temp\\" + originalFilename));
-
-        String originalFilename2 = uploadFile2.getOriginalFilename();
-        uploadFile2.transferTo(new File("D:\\Java\\project\\SpringDemo\\spring_mvc\\src\\main\\java\\temp\\" + originalFilename2));
-
-        // 还可以用数组的形式存储多文件
-
-    }
 }
