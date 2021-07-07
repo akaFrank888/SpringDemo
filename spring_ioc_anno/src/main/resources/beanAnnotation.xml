@@ -9,6 +9,7 @@
                 http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--    若是 基于Annotation装配Bean，则需要使用context命名空间，以在配置文件中开启 注解处理器-->
+    <!--    听说这个可以省略？-->
     <context:annotation-config/>
 
     <!--最后扫描包路径下所有Bean文件-->    <!--因为不能直接扫描Java下的所有包，所以就只能挨个包地扫了-->

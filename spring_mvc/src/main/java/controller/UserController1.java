@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -28,7 +26,7 @@ import java.io.IOException;
 public class UserController1 {
 
     /**
-     * 页面跳转的方式一：直接返回字符串
+            页面跳转的方式一：直接返回字符串
      */
     @RequestMapping(value = "/quick", method = RequestMethod.GET, params = {"username"})
     public String save() {

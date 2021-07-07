@@ -56,7 +56,7 @@
             2）“ user_id=#{id} ” 其中，user_id是表字段名，id是参数user的属性名（mybatis会自动进行bind）
     -->
     <!--动态sql 之 if-->
-    <select id="findByUser" parameterType="user" resultMap="userResultMap">
+    <select id="findByUser" resultMap="userResultMap">
 
         /*相当于   select * from all_user    */
         <include refid="selectUser"/>
@@ -82,7 +82,7 @@
             4）“  #{id} ” 中的id要与item的值保持统一
     -->
     <!--动态sql 之 foreach-->
-    <select id="findByIds"  parameterType="list" resultMap="userResultMap">
+    <select id="findByIds" resultMap="userResultMap">
         <include refid="selectUser"/>
         <where>
             <foreach collection="list" item="id" open="user_id in (" close=")" separator=",">

@@ -40,7 +40,7 @@ http://www.springframework.org/schema/context/spring-context.xsd">
         <property name="configLocation" value="classpath:sqlMapConfig.xml"/>
     </bean>
 
-    <!--扫描mapper所在的包 为mapper创建实现类-->
+    <!--扫描mapper所在的包(是类的那个包，不是xml) 为mapper创建实现类-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="mapper"/>
     </bean>
